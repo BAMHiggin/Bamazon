@@ -31,6 +31,13 @@ VALUES ("Mighty Putty", "Repair", 20, 100),
 ("Mixing Bowl", "Kitchen", 15, 100),
 ("Frying Pan", "Kitchen", 40, 30);
 
+--sql code update and remove purchased items
+--UPDATE products SET stock_quantity = (prodStockQuantity - prodChosenQuantity) " WHERE id = prodId;
 
+--start function to produce sql data as table in console log
+--SELECT id, product_name as name, price FROM products WHERE stock_quantity > 0
+
+-- finds stock based on user inputted id
+--SELECT product_name as name, stock_quantity, price FROM products WHERE id = answer["productSelect"]
 
 
