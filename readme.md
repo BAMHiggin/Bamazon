@@ -15,8 +15,23 @@ The user is able to select items and quantities from the store front. After a se
 
 Walk through available here:
 
+
+
 https://drive.google.com/file/d/1Yf-kjxbGcQhKb4ZiH3uaQUyqflsFw5lY/view
 
+
+### Expansion
+
+Features to come:
+
+- Manager view
+    - Product sales records
+    - Overhead costs
+    - Organization by department
+
+- Supervisor view
+    - Charts detailing product sales by department
+    - Total profits
 
 
  
