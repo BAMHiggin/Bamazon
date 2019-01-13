@@ -7,6 +7,8 @@ const cTable = require("console.table");
 // creates an easy-to-read table of contents in console log
 
 const pass = process.env.DB_PASSWORD;
+//hides sql password in env file under gitignore
+
 
 const connection = MySQL.createConnection({
     host: "localhost",
@@ -20,13 +22,14 @@ const connection = MySQL.createConnection({
 connection.connect(function (err) {
     if (err) throw err;
     start();
+    //executes start function, beginning on inventory screen
 });
 
 
 function start() {
     console.log("Welcome to the Bamazon store! Please take a look at our offerings.");
     connection.query(
-        "SELECT id, product_name as name, price FROM products", function (err, results) {
+        "SELECT id, product_name as name, price FROM products WHERE stock_quantity > 0;", function (err, results) {
             if (err) throw err;
             console.table(results);
 
@@ -35,6 +38,16 @@ function start() {
                     {
                         name: "productSelect",
                         type: "input",
+                        validate: function(input) {
+                            var isValid = false;
+                            for (var i = 0; i < results.length ; i++) {
+                                if (results[i].id == input) {
+                                    isValid = true;
+                                } 
+                            }
+                            return isValid;
+                        }
+                        ,
                         message: "Please enter the id number of the product you'd like to buy:"
                     }
                     ,
@@ -71,12 +84,12 @@ function start() {
                             updateStock(prodChosenQuantity, prodStockQuantity, prodId);
                             console.log(`You've ordered ${prodChosenQuantity} units of ${prodName}, for a total of $${prodCost}. Thank you for your purchase!`);
                         }
-
+                        console.log("Redirecting to main order page...");
+                        setTimeout(start, 3000);
                     }
                     function updateStock(prodChosenQuantity, prodStockQuantity, prodId) {
                         console.log("Your products are in stock!");
                         var updatesql = "UPDATE products SET stock_quantity = " + (prodStockQuantity - prodChosenQuantity) + " WHERE id = " + prodId +";";
-                        console.log(updatesql);
                         connection.query(
                             updatesql
                         );
@@ -110,3 +123,20 @@ function start() {
 
 // }
 
+
+
+
+
+
+
+// function(input) {
+//     var isValid = false;               
+
+//     for (var i = 0; i < results.length; i++){
+//         if (results[i].id == input){
+//             isValid = true;
+//         }
+        
+//     }
+//     return isValid;
+// }
